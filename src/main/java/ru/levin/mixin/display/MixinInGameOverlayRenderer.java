@@ -2,7 +2,6 @@ package ru.levin.mixin.display;
 
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.hud.InGameOverlayRenderer;
-import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.texture.Sprite;
 import net.minecraft.client.util.math.MatrixStack;
 import org.spongepowered.asm.mixin.Mixin;
@@ -21,16 +20,16 @@ public class MixinInGameOverlayRenderer {
     }
 
     @Inject(method = "renderUnderwaterOverlay", at = @At("HEAD"), cancellable = true)
-    private static void renderUnderwaterOverlayHook(MinecraftClient client, MatrixStack matrices, VertexConsumerProvider vertexConsumers, CallbackInfo ci) {
+    private static void renderUnderwaterOverlayHook(MinecraftClient client, MatrixStack matrices, CallbackInfo ci) {
         if (Manager.FUNCTION_MANAGER.noRender.state && Manager.FUNCTION_MANAGER.noRender.mods.get("Вода на экране")) {
             ci.cancel();
         }
     }
 
     @Inject(method = "renderInWallOverlay", at = @At("HEAD"), cancellable = true)
-    private static void renderInWallOverlayHook(Sprite sprite, MatrixStack matrices, VertexConsumerProvider vertexConsumers, CallbackInfo ci) {
+    private static void renderInWallOverlayHook(Sprite sprite, MatrixStack matrices, CallbackInfo ci) {
         if (Manager.FUNCTION_MANAGER.noRender.state && Manager.FUNCTION_MANAGER.noRender.mods.get("Удушье")) {
             ci.cancel();
         }
     }
-                                                }
+}
