@@ -14,7 +14,7 @@ import ru.levin.manager.Manager;
 @Mixin(InGameOverlayRenderer.class)
 public class MixinInGameOverlayRenderer {
     @Inject(method = "renderFireOverlay", at = @At("HEAD"), cancellable = true)
-    private static void renderFireOverlayHook(MatrixStack matrices, VertexConsumerProvider vertexConsumers, CallbackInfo ci) {
+    private static void renderFireOverlayHook(MinecraftClient client, MatrixStack matrices, VertexConsumerProvider vertexConsumers, CallbackInfo ci) {
         if (Manager.FUNCTION_MANAGER.noRender.state && Manager.FUNCTION_MANAGER.noRender.mods.get("Огонь на экране")) {
             ci.cancel();
         }
@@ -33,4 +33,4 @@ public class MixinInGameOverlayRenderer {
             ci.cancel();
         }
     }
-}
+            }
