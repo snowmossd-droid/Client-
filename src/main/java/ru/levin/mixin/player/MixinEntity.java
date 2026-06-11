@@ -119,12 +119,6 @@ public abstract class MixinEntity implements IEntity, CameraOverriddenEntity, IM
         this.lastTrailPos = pos;
     }
 
-    @ModifyExpressionValue(method = "move", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/Entity;isLogicalSideForUpdatingMovement()Z"))
-    private boolean fixFallDistanceCalculation(boolean original) {
-        Entity self = (Entity)(Object)this;
-        return self != mc.player && original;
-    }
-
     @Inject(method = "getBoundingBox", at = @At("RETURN"), cancellable = true)
     private void getBoundingBox(CallbackInfoReturnable<Box> cir) {
         Entity self = (Entity)(Object)this;
@@ -190,4 +184,4 @@ public abstract class MixinEntity implements IEntity, CameraOverriddenEntity, IM
         }
     }
 
-}
+    }
