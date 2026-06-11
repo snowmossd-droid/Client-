@@ -1,6 +1,5 @@
 package ru.levin.mixin.display;
 
-import com.llamalad7.mixinextras.sugar.Local;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.render.Camera;
 import net.minecraft.client.render.GameRenderer;
@@ -46,7 +45,8 @@ public abstract class MixinGameRenderer implements IMinecraft {
     @Shadow public abstract float getViewDistance();
 
     @Inject(method = "renderWorld", at = @At(value = "FIELD", target = "Lnet/minecraft/client/render/GameRenderer;renderHand:Z", opcode = Opcodes.GETFIELD, ordinal = 0))
-    private void renderWorld(RenderTickCounter tickCounter, CallbackInfo callbackInfo, @Local(ordinal = 2) Matrix4f matrix4f) {
+    private void renderWorld(RenderTickCounter tickCounter, CallbackInfo callbackInfo) {
+        Matrix4f matrix4f = new Matrix4f(RenderSystem.getProjectionMatrix());
         MatrixStack matrixStack = new MatrixStack();
         matrixStack.multiplyPositionMatrix(matrix4f);
         Vec3d camPos = mc.getEntityRenderDispatcher().camera.getPos().negate();
@@ -61,7 +61,7 @@ public abstract class MixinGameRenderer implements IMinecraft {
         Render3DUtil.onWorldRender(event);
     }
 
-    @Inject(at = @At(value = "FIELD", target = "Lnet/minecraft/client/render/GameRenderer;renderHand:Z", opcode = Opcodes.GETFIELD, ordinal = 0), method = "renderWorld")
+    @Inject(method = "renderWorld", at = @At(value = "FIELD", target = "Lnet/minecraft/client/render/GameRenderer;renderHand:Z", opcode = Opcodes.GETFIELD, ordinal = 0))
     private void render3dHook(RenderTickCounter tickCounter, CallbackInfo ci) {
         MatrixStack matrixStack = new MatrixStack();
         Camera camera = mc.gameRenderer.getCamera();
