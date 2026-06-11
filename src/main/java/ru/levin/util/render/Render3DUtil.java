@@ -146,7 +146,7 @@ public class Render3DUtil implements IMinecraft {
         drawShape(blockPos, voxelShape, color, width, true, false);
     }
     public boolean canSee(Box box) {
-        Frustum frustum = mc.worldRenderer.getCapturedFrustum();
+        Frustum frustum = mc.worldRenderer.getFrustum();
         return box != null && frustum != null && frustum.isVisible(box);
     }
 
@@ -281,4 +281,5 @@ public class Render3DUtil implements IMinecraft {
     public record Texture(MatrixStack.Entry entry, Identifier id, float x, float y, float width, float height, Vector4i color) {}
     public record Line(MatrixStack.Entry entry, Vec3d start, Vec3d end, int colorStart, int colorEnd, float width) {}
     public record Quad(MatrixStack.Entry entry, Vec3d x, Vec3d y, Vec3d w, Vec3d z, int color) {}
-}
+                                                                          }
+                                                        
