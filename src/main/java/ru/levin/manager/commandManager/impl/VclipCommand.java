@@ -52,7 +52,7 @@ public class VclipCommand extends Command {
             mc.player.networkHandler.sendPacket(
                     new PlayerMoveC2SPacket.PositionAndOnGround(
                             mc.player.getX(), startY, mc.player.getZ(),
-                            false, true
+                            false
                     )
             );
         }
@@ -61,7 +61,7 @@ public class VclipCommand extends Command {
             mc.player.networkHandler.sendPacket(
                     new PlayerMoveC2SPacket.PositionAndOnGround(
                             mc.player.getX(), endY, mc.player.getZ(),
-                            false, true
+                            false
                     )
             );
         }
@@ -85,4 +85,5 @@ public class VclipCommand extends Command {
         }
         return 0;
     }
-}
+                }
+        
