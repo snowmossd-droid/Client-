@@ -42,7 +42,7 @@ public class HclipCommand extends Command {
             mc.player.networkHandler.sendPacket(
                     new PlayerMoveC2SPacket.PositionAndOnGround(
                             mc.player.getX(), y, mc.player.getZ(),
-                            false, true
+                            false
                     )
             );
         }
@@ -51,7 +51,7 @@ public class HclipCommand extends Command {
             mc.player.networkHandler.sendPacket(
                     new PlayerMoveC2SPacket.PositionAndOnGround(
                             x, y, z,
-                            false, true
+                            false
                     )
             );
         }
