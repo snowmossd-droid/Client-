@@ -13,9 +13,6 @@ public interface ClientPlayerEntityAccessor {
     @Accessor("lastPitch")
     float getLastPitch();
 
-    @Invoker("isBlind")
-    boolean invokeIsBlind();
-
     @Invoker("isWalking")
     boolean invokeIsWalking();
 
