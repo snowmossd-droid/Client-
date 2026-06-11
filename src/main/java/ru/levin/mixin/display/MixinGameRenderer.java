@@ -75,7 +75,7 @@ public abstract class MixinGameRenderer implements IMinecraft {
     }
 
     @Inject(method = "getBasicProjectionMatrix", at = @At("TAIL"), cancellable = true)
-    private void getBasicProjectionMatrixHook(float fov, CallbackInfoReturnable<Matrix4f> cir) {
+    private void getBasicProjectionMatrixHook(double fov, CallbackInfoReturnable<Matrix4f> cir) {
         AspectRatio aspectRatio = Manager.FUNCTION_MANAGER.aspectRatio;
         if (aspectRatio.state) {
             float aspect = 1.0f;
@@ -172,4 +172,4 @@ public abstract class MixinGameRenderer implements IMinecraft {
         if (Manager.FUNCTION_MANAGER.noRender.state && Manager.FUNCTION_MANAGER.noRender.mods.get("Плохие эффекты")) return 0;
         return MathHelper.lerp(delta, first, second);
     }
-}
+    }
