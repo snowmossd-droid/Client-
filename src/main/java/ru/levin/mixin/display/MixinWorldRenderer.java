@@ -1,28 +1,19 @@
 package ru.levin.mixin.display;
 
-import net.minecraft.client.render.Camera;
-import net.minecraft.client.render.GameRenderer;
-import net.minecraft.client.render.LightmapTextureManager;
-import net.minecraft.client.render.RenderTickCounter;
 import net.minecraft.client.render.WorldRenderer;
-import org.joml.Matrix4f;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.ModifyArg;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import ru.levin.manager.Manager;
 
 @Mixin(WorldRenderer.class)
 public abstract class MixinWorldRenderer {
 
-    @ModifyArg(
-        method = "render",
-        at = @At("HEAD"),
-        index = 1
-    )
-    private boolean modifyRenderBlockOutline(boolean renderBlockOutline) {
-        if (Manager.FUNCTION_MANAGER != null) {
-            return !Manager.FUNCTION_MANAGER.blockHighLight.isState();
+    @Inject(method = "isOutlineVisible", at = @At("HEAD"), cancellable = true)
+    private void isOutlineVisible(CallbackInfoReturnable<Boolean> cir) {
+        if (Manager.FUNCTION_MANAGER != null && Manager.FUNCTION_MANAGER.blockHighLight.isState()) {
+            cir.setReturnValue(false);
         }
-        return renderBlockOutline;
     }
 }
