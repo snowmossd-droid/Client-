@@ -88,7 +88,7 @@ public class NameTags extends Function {
             if (sphereRender.get()) {
                 ItemStack offHand = player.getOffHandStack();
                 if (!offHand.isEmpty() && (offHand.getItem() == Items.TOTEM_OF_UNDYING || offHand.getItem() instanceof PlayerHeadItem)) {
-                    Text customName = offHand.getCustomName();
+                    Text customName = offHand.get(net.minecraft.component.DataComponentTypes.CUSTOM_NAME);
                     if (customName != null) {
                         itemText = customName;
                     }
@@ -316,4 +316,5 @@ public class NameTags extends Function {
             RenderAddon.renderItem(context, itemStacks.get(index), x, y, 0.85f, true);
         }
     }
-}
+        }
+            
