@@ -14,8 +14,8 @@ import ru.levin.manager.Manager;
 @SuppressWarnings("All")
 @Mixin(PlayerEntityRenderer.class)
 public class MixinPlayerEntityRenderer {
-    @Inject(method = "renderLabelIfPresent(Lnet/minecraft/entity/player/PlayerEntity;Lnet/minecraft/text/Text;Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;I)V", at = @At("HEAD"), cancellable = true)
-    private void renderLabelIfPresent(PlayerEntity entity, Text text, MatrixStack matrixStack, VertexConsumerProvider vertexConsumers, int light, CallbackInfo ci) {
+    @Inject(method = "renderLabelIfPresent(Lnet/minecraft/entity/player/PlayerEntity;Lnet/minecraft/text/Text;Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;IF)V", at = @At("HEAD"), cancellable = true)
+    private void renderLabelIfPresent(PlayerEntity entity, Text text, MatrixStack matrixStack, VertexConsumerProvider vertexConsumers, int light, float tickDelta, CallbackInfo ci) {
         if (Manager.FUNCTION_MANAGER.nameTags.state && Manager.FUNCTION_MANAGER.nameTags.tags.get("Игроки")) {
             ci.cancel();
         }
