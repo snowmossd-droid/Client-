@@ -87,4 +87,4 @@ public abstract class MixinLivingEntity implements IMinecraft {
             mc.player.setPitch(customPitch);
         }
     }
-}
+            }
