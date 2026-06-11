@@ -84,7 +84,7 @@ public class RenderAddon implements IMinecraft {
         drawContext.getMatrices().scale(size, size, 1);
         drawContext.drawItem(item, 0, 0);
         if (stackOverlay) {
-            drawContext.drawStackOverlay(mc.textRenderer, item, 0, 0);
+            drawContext.drawItemInSlot(mc.textRenderer, item, 0, 0);
         }
         drawContext.getMatrices().pop();
     }
@@ -102,7 +102,7 @@ public class RenderAddon implements IMinecraft {
             e.getMatrices().translate(x + offset2, y, 0);
             e.getMatrices().scale(scale, scale, 1.0f);
             e.drawItem(stack, 0, 0, 7, 0);
-            e.drawStackOverlay(mc.textRenderer, stack, 0, 0);
+            e.drawItemInSlot(mc.textRenderer, stack, 0, 0);
             e.getMatrices().pop();
             offset2 += offset;
         }
@@ -133,7 +133,7 @@ public class RenderAddon implements IMinecraft {
             EntityRenderer<? super LivingEntity> baseRenderer =
                     (EntityRenderer<? super LivingEntity>) mc.getEntityRenderDispatcher().getRenderer(living);
             if (baseRenderer instanceof LivingEntityRenderer<?, ?> livingRenderer) {
-                texture = livingRenderer.getTexture(living);
+                texture = livingRenderer.getTexture((net.minecraft.entity.Entity)living);
             }
         }
 
@@ -180,4 +180,5 @@ public class RenderAddon implements IMinecraft {
         fakePlayer.headYaw = mc.player.headYaw;
         fakePlayer.bodyYaw = mc.player.bodyYaw;
     }
-}
+            }
+            
