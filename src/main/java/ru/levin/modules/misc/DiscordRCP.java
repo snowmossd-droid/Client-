@@ -5,7 +5,6 @@ import ru.levin.com.discord.DiscordRPC;
 import ru.levin.com.discord.DiscordRichPresence;
 import ru.levin.events.Event;
 import ru.levin.events.impl.EventUpdate;
-import ru.levin.events.impl.render.EventRender2D;
 import ru.levin.manager.Manager;
 import ru.levin.modules.Function;
 import ru.levin.modules.FunctionAnnotation;
@@ -13,43 +12,40 @@ import ru.levin.modules.Type;
 
 @FunctionAnnotation(name = "DiscordRPC", desc = "Активность в дискорде", type = Type.Misc)
 public class DiscordRCP extends Function {
-    private final DiscordRPC rpc = DiscordRPC.INSTANCE;
+    private final boolean supported = DiscordRPC.Holder.SUPPORTED;
     private volatile boolean started = false;
     private Thread thread;
     private final DiscordRichPresence presence = new DiscordRichPresence();
 
     @Override
     public void onEvent(Event event) {
+        if (!supported) return;
         if (event instanceof EventUpdate) {
             startRpc();
         }
     }
 
     public synchronized void startRpc() {
-        if (started) return;
+        if (!supported || started) return;
         started = true;
+        DiscordRPC rpc = DiscordRPC.Holder.INSTANCE;
         DiscordEventHandlers handlers = new DiscordEventHandlers();
         rpc.Discord_Initialize("1384873696375603281", handlers, true, "");
         presence.startTimestamp = System.currentTimeMillis() / 1000L;
         presence.largeImageText = "https://t.me/exosware";
 
         updatePresenceFields();
-
         rpc.Discord_UpdatePresence(presence);
 
         thread = new Thread(() -> {
             try {
                 while (!Thread.currentThread().isInterrupted()) {
                     rpc.Discord_RunCallbacks();
-
                     updatePresenceFields();
-
                     rpc.Discord_UpdatePresence(presence);
-
                     Thread.sleep(2000L);
                 }
-            } catch (InterruptedException ignored) {
-            }
+            } catch (InterruptedException ignored) {}
         }, "TH-RPC-Handler");
         thread.setDaemon(true);
         thread.start();
@@ -73,6 +69,8 @@ public class DiscordRCP extends Function {
         if (thread != null && thread.isAlive()) {
             thread.interrupt();
         }
-        rpc.Discord_Shutdown();
+        if (supported) {
+            DiscordRPC.Holder.INSTANCE.Discord_Shutdown();
+        }
     }
-}
+                }
