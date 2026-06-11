@@ -75,7 +75,7 @@ public class World extends Function {
 
         if (event instanceof EventUpdate) {
             if (timeBox.get()) {
-                mc.world.setTime(resolveTime(), resolveTime(), false);
+                mc.world.setTime(resolveTime());
             }
 
             if (weatherBox.get()) {
@@ -119,4 +119,5 @@ public class World extends Function {
             default -> 6000L;
         };
     }
-}
+        }
+                
