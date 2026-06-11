@@ -11,7 +11,7 @@ public abstract class MixinWorldRenderer {
 
     @ModifyVariable(method = "render", at = @At("HEAD"), ordinal = 0, argsOnly = true)
     private boolean modifyRenderBlockOutline(boolean renderBlockOutline) {
-        if (Manager.FUNCTION_MANAGER != null && Manager.FUNCTION_MANAGER.blockHighLight.isState()) {
+        if (Manager.FUNCTION_MANAGER != null && Manager.FUNCTION_MANAGER.blockHighLight != null && Manager.FUNCTION_MANAGER.blockHighLight.isState()) {
             return false;
         }
         return renderBlockOutline;
