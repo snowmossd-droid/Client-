@@ -11,8 +11,8 @@ public interface DiscordRPC extends Library {
     void Discord_Initialize(final String p0, final DiscordEventHandlers p1, final boolean p2, final String p3);
 
     final class Holder {
-        static final DiscordRPC INSTANCE;
-        static final boolean SUPPORTED;
+        public static final DiscordRPC INSTANCE;
+        public static final boolean SUPPORTED;
 
         static {
             DiscordRPC inst = null;
